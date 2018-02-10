@@ -1,0 +1,16 @@
+{
+  "name": "node-scrapping",
+  "version": "0.0.1",
+  "description": "Web Scrape",
+  "main": "server.js",
+  "author": "Aditya Gaur",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aditya-gaur/node-scrapping"
+  },
+  "dependencies": {
+    "express": "latest",
+    "request": "latest",
+    "cheerio": "latest"
+  }
+}
