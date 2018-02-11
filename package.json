@@ -4,13 +4,51 @@
   "description": "Web Scrape",
   "main": "server.js",
   "author": "Aditya Gaur",
+  "scripts": {
+    "start": "webpack && babel-node server.js",
+    "build": "webpack",
+    "server": "webpack && babel-node server.js"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/aditya-gaur/node-scrapping"
   },
+  "devDependencies": {
+    "babel-cli": "6.16.0",
+    "babel-core": "6.17.0",
+    "babel-loader": "6.2.5",
+    "babel-polyfill": "6.16.0",
+    "babel-preset-es2015": "6.16.0",
+    "babel-preset-react": "6.16.0",
+    "css-loader": "0.25.0",
+    "react-hot-loader": "3.0.0-beta.5",
+    "style-loader": "0.13.1",
+    "webpack": "1.13.2",
+    "webpack-dev-server": "1.16.2",
+    "webpack-merge": "0.14.1",
+    "webpack-validator": "2.2.9"
+  },
   "dependencies": {
-    "express": "latest",
-    "request": "latest",
-    "cheerio": "latest"
+    "axios": "^0.17.1",
+    "body-parser": "^1.18.2",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.2",
+    "immutable": "^3.8.2",
+    "install": "^0.8.9",
+    "morgan": "^1.9.0",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2",
+    "react-redux": "^4.4.8",
+    "react-router": "^2.8.1",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-saga": "^0.12.1",
+    "redux-thunk": "^2.2.0",
+    "request": "^2.83.0"
   }
 }

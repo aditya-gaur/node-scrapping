@@ -1,12 +1,13 @@
-node-web-scraper
-================
+# node-scrapping
+Simple web scraper in react JS and node JS
+### Installation
 
-Simple web scraper.
-To run this example use the following commands:
 
-``` shell
+Install the dependencies and devDependencies and start the server.
+
+```sh
+$ cd node-scrapping
 $ npm install
-$ node server.js
+$ npm start
 ```
-
- Then it will start up our node server, navigate to http://localhost:8081/scrape
+Navigate to http://localhost:8081

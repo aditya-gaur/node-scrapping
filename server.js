@@ -1,107 +1,23 @@
-var express = require("express");
-var fs = require("fs");
-var request = require("request");
-var cheerio = require("cheerio");
-var app = express();
+import express from "express";
+import morgan from "morgan";
+import bodyParser from "body-parser";
 
-let searchIndex = 0;
-const result = [];
-const keywords = [
-  "medical",
-  "imaging",
-  "diagnostic",
-  "ovidius",
-  "mental",
-  "health",
-  "medical technologies",
-  "medicines"
-];
-// var keywords = ["medical imaging", "diagnostic", "ovidius", "mental health", "medical technologies"]
+import routes from "./route";
 
-function getContentByKeywords(string) {
-  const tempObj = {
-    content: "",
-    keywords: []
-  }; // content: string; keywords: array
-  tempObj.content = string;
-  for (let idx = 0; idx < keywords.length; idx++) {
-    const regex = new RegExp(keywords[idx], "gi");
-    const frequency = (string.match(regex) || []).length;
-    if (frequency > 0) {
-      const obj = {};
-      obj[keywords[idx]] = frequency;
-      tempObj.keywords.push(obj);
-    }
-  }
+const app = express();
+const port = process.env.PORT || 8081;
 
-  if (tempObj.keywords.length > 0) {
-    result.push(tempObj);
-  }
-}
+app.use(morgan("dev"));
 
-app.get("/scrape", function(req, res) {
-  url = "http://www.ema.europa.eu/ema/";
+// Accept encoded data as well as json format
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-  request(url, function(error, response, html) {
-    if (!error) {
-      var $ = cheerio.load(html);
+// Static files
+app.use(express.static(__dirname + "/dist"));
 
-      // FETCH HEADING
-      $(".hp-highlight-box").filter(function() {
-        var data1 = $(this);
-        getContentByKeywords(
-          data1
-            .find("h2")
-            .text()
-            .trim()
-        );
+app.use(routes);
 
-        getContentByKeywords(
-          data1
-            .find("p")
-            .text()
-            .trim()
-        );
-      });
-      // FETCH HEADING ENDS
-
-      // FETCH MAIN CONTENT
-      $(".news-tabs span div ul li").filter(function() {
-        var data = $(this);
-        // console.log('000', data)
-        getContentByKeywords(
-          data
-            .find(".h4")
-            .text()
-            .trim()
-        );
-        getContentByKeywords(
-          data
-            .find(".content")
-            .text()
-            .trim()
-        );
-      });
-      // FETCH MAIN CONTENT ENDS
-
-      // FETCH SIDE BAR
-      var test = $(".hp-side-col span").first();
-      $(test)
-        .find("li")
-        .filter(function() {
-          var data2 = $(this);
-          getContentByKeywords(data2.text().trim());
-        });
-      // FETCH SIDE BAR ENDS
-    } else {
-      console.log('error',error)
-    }
-
-    console.log("result", JSON.stringify(result));
-    res.send("Check your console!");
-  });
-});
-
-app.listen("8081");
-console.log("Magic happens on port 8081");
-exports = module.exports = app;
+app.listen(port);
+console.log(`listening on port ${port}`);
+module.exports = app;
